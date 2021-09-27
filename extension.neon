@@ -19,6 +19,9 @@ parameters:
     typeAliases:
         Mage_Catalog_Model_Entity_Product_Collection: 'Mage_Catalog_Model_Resource_Product_Collection'
         callback: 'callable'
+    earlyTerminatingMethodCalls:
+        Mage:
+            - throwException
 
 services:
     -
