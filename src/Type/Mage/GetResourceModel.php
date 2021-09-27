@@ -7,7 +7,11 @@ final class GetResourceModel extends StaticMethodReturnTypeDetector
 {
     public function getMagentoClassName(string $identifier): string
     {
-        return $this->getMagentoConfig()->getResourceModelClassName($identifier);
+        $className = $this->getMagentoConfig()->getResourceModelClassName($identifier);
+        if ($className === false) {
+            throw new \PHPStan\Broker\ClassNotFoundException($identifier);
+        }
+        return $className;
     }
 
     protected static function getMethodName(): string

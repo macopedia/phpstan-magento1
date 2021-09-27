@@ -1,8 +1,8 @@
-# PHPStan Extension for Magento 1
+# PHPStan Extension for Magento 1 / OpenMage MageLTS
 
 Extension for [PHPStan](https://github.com/phpstan/phpstan) to allow analysis of Magento 1 code.
+It doesn't require db connection to run.
 
-Currently it assumes Magento is installed in the `htdocs/` directory of the project root. Further work is needed in phpstan itself to allow more intellegence for extensions to be more customised whilst working with both phpstan/phpstan and phpstan/phpstan-shim.
 
 ## Usage
 
@@ -12,32 +12,47 @@ Make sure it has
 
 ```neon
 includes:
-    - vendor/vianetz/phpstan-magento1/extension.neon
+    - vendor/macopedia/phpstan-magento1/extension.neon
 ```
 
 Then run
 
 ```bash
-composer require inviqa/phpstan-magento1 phpstan/phpstan
+composer require --dev macopedia/phpstan-magento1
 ```
 
 ## Alternative Magento path
 
 By default this extension assumes the Magento directory is `%currentWorkingDirectory%/htdocs`.
-
+You can adapt the path by changing the `magentoRootPath` parameter in the phpstan.neon file.
 Add to the project's phpstan.neon:
 
 ```neon
 parameters:
+    magentoRootPath: %currentWorkingDirectory%/htdocs
+
+```
+
+## Example configuration file for analysing Magento Module
+
+```neon
+parameters:
+    magentoRootPath: %currentWorkingDirectory%/htdocs
     paths:
         - %currentWorkingDirectory%/path/to/magento/app/code/local
     autoload_files:
         - %currentWorkingDirectory%/path/to/magento/app/Mage.php
+    paths:
+        #lets start small with just our extensions
+        - %currentWorkingDirectory%/app/code/local/VendorName/ModuleName
+    excludePaths:
+        - */Vendor/ModuleName/SomePathToExclude/*
+    level: 0
 ```
 
 # Known Issues
 
-## Data/SQL scripts can't be tested
+## Data/SQL scripts can't be tested
 
 Since these scripts use a presumed $this variable due to being included from a setup class, work is needed to:
 

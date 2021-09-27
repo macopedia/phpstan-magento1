@@ -17,12 +17,7 @@ final class ModuleControllerAutoloader
     public function __construct(string $codePool, $magentoRoot = null)
     {
         if (empty($magentoRoot)) {
-            $mageClass = new ReflectionClass(Mage::class);
-            if ($mageClass->getFileName() !== false) {
-                $magentoRoot = \dirname($mageClass->getFileName(), 2);
-            } else {
-                throw new \RuntimeException('Could not find path to Mage class');
-            }
+            $magentoRoot = \dirname(BP, 2);
         }
         $this->codePool = $codePool;
         $this->magentoRoot = $magentoRoot;

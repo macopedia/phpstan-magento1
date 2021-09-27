@@ -1,13 +1,14 @@
 {
-    "name": "vianetz/phpstan-magento1",
+    "name": "macopedia/phpstan-magento1",
     "description": "Extension for PHPStan to allow analysis of Magento 1 code.",
     "type": "library",
     "require": {
-        "phpstan/phpstan": "^0.11|^0.12",
+        "phpstan/phpstan": "^0.12",
         "php": ">= 7.2"
     },
     "replace": {
-        "inviqa/phpstan-magento1": "0.1.5"
+        "inviqa/phpstan-magento1": "0.1.5",
+        "vianetz/phpstan-magento1": "0.1.5"
     },
     "autoload": {
         "psr-4": {

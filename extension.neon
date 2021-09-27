@@ -1,10 +1,21 @@
+parametersSchema:
+    magentoRootPath: string()
 parameters:
-    excludes_analyse:
+    magentoRootPath: %currentWorkingDirectory%/htdocs
+    excludePaths:
         - */app/code/local/*/*/data/*
         - */app/code/local/*/*/sql/*
     bootstrapFiles:
-        - %currentWorkingDirectory%/htdocs/app/Mage.php
         - phpstan-bootstrap.php
+    scanFiles:
+        - %magentoRootPath%/app/Mage.php
+        - %magentoRootPath%/app/code/core/Mage/Core/functions.php
+    scanDirectories:
+        #for static reflection, so we don't have to call autoloader
+        - %magentoRootPath%/lib/
+        - %magentoRootPath%/app/code/local/
+        - %magentoRootPath%/app/code/community/
+        - %magentoRootPath%/app/code/core/
     typeAliases:
         Mage_Catalog_Model_Entity_Product_Collection: 'Mage_Catalog_Model_Resource_Product_Collection'
         callback: 'callable'

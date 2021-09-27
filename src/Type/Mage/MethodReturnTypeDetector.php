@@ -10,6 +10,7 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\ShouldNotHappenException;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
+use PHPStanMagento1\Config\MagentoCore;
 
 abstract class MethodReturnTypeDetector
 {
@@ -36,7 +37,7 @@ abstract class MethodReturnTypeDetector
     protected function getTypeFromExpr(MethodReflection $methodReflection, $methodCall, Scope $scope): Type
     {
         if (! isset($methodCall->args[0]) || ! $methodCall->args[0]->value instanceof String_) {
-            throw new ShouldNotHappenException();
+            throw new ShouldNotHappenException("type:" . \get_class($methodCall->args[0]->value));
         }
 
         $modelName = $methodCall->args[0]->value->value;
@@ -45,8 +46,17 @@ abstract class MethodReturnTypeDetector
         return new ObjectType($modelClassName);
     }
 
-    protected function getMagentoConfig(): \Mage_Core_Model_Config
+    /**
+     * Load Magento XML configuration
+     *
+     * @return MagentoCore
+     */
+    protected function getMagentoConfig(): MagentoCore
     {
-        return \Mage::app()->getConfig();
+        $config = new MagentoCore();
+        $config->loadBase();
+        $config->loadModules();
+
+        return $config;
     }
 }
