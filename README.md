@@ -36,6 +36,8 @@ parameters:
 ## Example configuration file for analysing Magento Module
 
 ```neon
+includes:
+    - vendor/macopedia/phpstan-magento1/extension.neon
 parameters:
     magentoRootPath: %currentWorkingDirectory%/htdocs
     paths:
