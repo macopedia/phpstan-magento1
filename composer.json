@@ -3,7 +3,7 @@
     "description": "Extension for PHPStan to allow analysis of Magento 1 code.",
     "type": "library",
     "require": {
-        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan": ">=0.12",
         "php": ">= 7.2"
     },
     "replace": {
