@@ -7,7 +7,7 @@ use PhpParser\Node\Expr\MethodCall;
 use PhpParser\Node\Scalar\String_;
 use PHPStan\Analyser\Scope;
 use PHPStan\Reflection\MethodReflection;
-use PHPStan\ShouldNotHappenException;
+use PHPStan\Reflection\ParametersAcceptorSelector;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
 use PHPStanMagento1\Config\MagentoCore;
@@ -32,15 +32,15 @@ abstract class MethodReturnTypeDetector
 
     /**
      * @param MethodCall|\PhpParser\Node\Expr\StaticCall $methodCall
-     * @throws \PHPStan\ShouldNotHappenException
      */
     protected function getTypeFromExpr(MethodReflection $methodReflection, $methodCall, Scope $scope): Type
     {
-        if (! isset($methodCall->args[0]) || ! $methodCall->args[0]->value instanceof String_) {
-            throw new ShouldNotHappenException("type:" . \get_class($methodCall->args[0]->value));
+        $argument = $methodCall->getArgs()[0] ?? null;
+        if ($argument === null  || ! $argument->value instanceof String_) {
+            return ParametersAcceptorSelector::selectSingle($methodReflection->getVariants())->getReturnType();
         }
 
-        $modelName = $methodCall->args[0]->value->value;
+        $modelName = $argument->value->value;
         $modelClassName = $this->getMagentoClassName($modelName);
 
         return new ObjectType($modelClassName);
