@@ -6,7 +6,7 @@ It doesn't require db connection to run.
 
 ## Usage
 
-Add `phpstan.neon` to your Magento 1 project.
+Add `phpstan.neon` to your Magento 1/OpenMage project.
 
 Make sure it has
 
@@ -41,10 +41,6 @@ includes:
 parameters:
     magentoRootPath: %currentWorkingDirectory%/htdocs
     paths:
-        - %currentWorkingDirectory%/path/to/magento/app/code/local
-    autoload_files:
-        - %currentWorkingDirectory%/path/to/magento/app/Mage.php
-    paths:
         #lets start small with just our extensions
         - %currentWorkingDirectory%/app/code/local/VendorName/ModuleName
     excludePaths:
@@ -56,7 +52,7 @@ parameters:
 
 ## Data/SQL scripts can't be tested
 
-Since these scripts use a presumed $this variable due to being included from a setup class, work is needed to:
+Since these scripts use a presumed `$this` variable due to being included from a setup class, work is needed to:
 
 * work out the correct setup class
 * somehow make phpstan aware of it for the file
@@ -65,7 +61,7 @@ Since these scripts use a presumed $this variable due to being included from a s
 
 This causes subsequent calls to the class object to assume the scope of the super-class that defined the return type.
 
-This is due to their PHPDoc not using the up to date way of specifying fluency with subclasses using "$this" as the type.
+This is due to their PHPDoc not using the up to date way of specifying fluency with subclasses using `$this` as the type.
 
 Options to resolve:
 
@@ -74,7 +70,7 @@ Options to resolve:
  * Define @method PHPDoc for the called methods in the subclass
  * Add the error to the parameters.ignoreErrors phpstan configuration to ignore it - this loses the ability to properly type the subseqent methods of the fluent interface
 
-## Mage_Core_Model_Abstract::load $id is not an integer
+## Mage_Core_Model_Abstract::load `$id` is not an integer
 
 This is due to an inadequate PHPDoc of the load method of the Mage_Core_Model_Abstract class. It should have used a "mixed" type to support when a field is specified as the 2nd argument.
 

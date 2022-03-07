@@ -1,14 +1,20 @@
+# This configuration file doesn't use static reflection for loading Mage class (so it executes code of Mage file).
+# Make sure you DON'T have local.xml file in your project when using this config. Otherwise you'll get errors
+# about connecting to db
+# this config will also throw warnings "PHP Warning:  Constant DS already defined in", this is an issue in phpstan
+# https://github.com/phpstan/phpstan/issues/6744#event-6194525980
 parametersSchema:
     magentoRootPath: string()
 parameters:
     magentoRootPath: %currentWorkingDirectory%/htdocs
+    staticReflection: false
     excludePaths:
         - */app/code/local/*/*/data/*
         - */app/code/local/*/*/sql/*
     bootstrapFiles:
-        - phpstan-bootstrap.php
-    scanFiles:
         - %magentoRootPath%/app/Mage.php
+        - phpstan-bootstrap-mage-autoload.php
+
     typeAliases:
         Mage_Catalog_Model_Entity_Product_Collection: 'Mage_Catalog_Model_Resource_Product_Collection'
         callback: 'callable'

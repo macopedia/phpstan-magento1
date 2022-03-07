@@ -15,38 +15,20 @@ if (!defined('BP')) {
     define('BP', $magentoRootPath);
 }
 
-define('staticReflection', true);
-
-if (!defined('DS')) {
-    define('DS', DIRECTORY_SEPARATOR);
-}
-if (!defined('PS')) {
-    define('PS', PATH_SEPARATOR);
-}
-
-/**
- * Set include path
- */
-$paths = [];
-$paths[] = BP . DS . 'app' . DS . 'code' . DS . 'local';
-$paths[] = BP . DS . 'app' . DS . 'code' . DS . 'community';
-$paths[] = BP . DS . 'app' . DS . 'code' . DS . 'core';
-$paths[] = BP . DS . 'lib';
-
-$appPath = implode(PS, $paths);
-set_include_path($appPath . PS . get_include_path());
-include_once "Mage/Core/functions.php";
-
 (new ModuleControllerAutoloader('local'))->register();
 (new ModuleControllerAutoloader('core'))->register();
 (new ModuleControllerAutoloader('community'))->register();
 
 /**
- * Custom autoloader compatible with Varien_Autoload
- * Autoloading is needed only for the PHPStanMagento1\Config\MagentoCore which inherits from some magento classes.
- * PHPStan uses static analysis, so doesn't require autoloading.
+ * We replace the original Varien_Autoload autoloader with a custom one in order to prevent errors with invalid classes
+ * that are used throughout the Magento core code.
+ * The original autoloader would in this case return false and lead to an error in phpstan because the type alias in extension.neon
+ * is evaluated afterwards.
+ *
+ * @see \Varien_Autoload::autoload()
  */
 spl_autoload_register(static function($className) {
+    spl_autoload_unregister([Varien_Autoload::instance(), 'autoload']);
 
     $classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $className)));
     $classFile .= '.php';

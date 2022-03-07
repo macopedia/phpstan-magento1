@@ -5,6 +5,9 @@ namespace PHPStanMagento1\Type\Mage;
 
 final class GetResourceModel extends StaticMethodReturnTypeDetector
 {
+    /**
+     * @throws \PHPStan\Broker\ClassNotFoundException
+     */
     public function getMagentoClassName(string $identifier): string
     {
         $className = $this->getMagentoConfig()->getResourceModelClassName($identifier);
