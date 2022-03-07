@@ -14,6 +14,8 @@ use PHPStanMagento1\Config\MagentoCore;
 
 abstract class MethodReturnTypeDetector
 {
+    protected static $config;
+
     abstract protected static function getMethodName(): string;
     abstract protected function getMagentoClassName(string $identifier): string;
 
@@ -49,14 +51,23 @@ abstract class MethodReturnTypeDetector
     /**
      * Load Magento XML configuration
      *
-     * @return MagentoCore
+     * @return MagentoCore | \Mage_Core_Model_Config
      */
-    protected function getMagentoConfig(): MagentoCore
+    protected function getMagentoConfig()
     {
-        $config = new MagentoCore();
-        $config->loadBase();
-        $config->loadModules();
+        if (self::$config) {
+            return self::$config;
+        }
 
-        return $config;
+        //change this to DI of staticReflection config
+        if (\defined('staticReflection')) {
+            $config = new MagentoCore();
+            $config->loadBase();
+            $config->loadModules();
+        } else {
+            $config = \Mage::app()->getConfig();
+        }
+        self::$config = $config;
+        return self::$config;
     }
 }
