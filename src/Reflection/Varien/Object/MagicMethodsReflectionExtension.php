@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPStanMagento1\Reflection\Varien\Object;
@@ -6,7 +7,6 @@ namespace PHPStanMagento1\Reflection\Varien\Object;
 use PHPStan\Reflection\ClassReflection;
 use PHPStan\Reflection\MethodReflection;
 use PHPStan\Reflection\MethodsClassReflectionExtension;
-
 use Varien_Object;
 
 final class MagicMethodsReflectionExtension implements MethodsClassReflectionExtension

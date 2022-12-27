@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace PHPStanMagento1\Config;
@@ -45,7 +46,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
      */
     protected function getEtcDir()
     {
-       return BP . '/app/etc';
+        return BP . '/app/etc';
     }
 
     /**
@@ -55,7 +56,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
      */
     protected function getCodeDir()
     {
-       return BP . '/app/code';
+        return BP . '/app/code';
     }
 
     /**
@@ -69,7 +70,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     public function getGroupedClassName($groupType, $classId, $groupRootNode = null)
     {
         if (empty($groupRootNode)) {
-            $groupRootNode = 'global/'.$groupType.'s';
+            $groupRootNode = 'global/' . $groupType . 's';
         }
 
         $classArr = explode('/', trim($classId));
@@ -80,7 +81,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
             return $this->_classNameCache[$groupRootNode][$group][$class];
         }
 
-        $config = $this->_xml->global->{$groupType.'s'}->{$group};
+        $config = $this->_xml->global->{$groupType . 's'}->{$group};
 
         // First - check maybe the entity class was rewritten
         $className = '';
@@ -94,7 +95,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
              */
             if (isset($config->deprecatedNode)) {
                 $deprecatedNode = $config->deprecatedNode;
-                $configOld = $this->_xml->global->{$groupType.'s'}->$deprecatedNode;
+                $configOld = $this->_xml->global->{$groupType . 's'}->$deprecatedNode;
                 if (isset($configOld->rewrite->$class)) {
                     $className = (string) $configOld->rewrite->$class;
                 }
@@ -109,10 +110,10 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
                 $className = $this->getClassName($config);
             }
             if (empty($className)) {
-                $className = 'mage_'.$group.'_'.$groupType;
+                $className = 'mage_' . $group . '_' . $groupType;
             }
             if (!empty($class)) {
-                $className .= '_'.$class;
+                $className .= '_' . $class;
             }
             $className = uc_words($className);
         }
@@ -146,7 +147,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
      */
     public function getBlockClassName($blockType)
     {
-        if (strpos($blockType, '/')===false) {
+        if (strpos($blockType, '/') === false) {
             return $blockType;
         }
         return $this->getGroupedClassName('block', $blockType);
@@ -174,7 +175,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     public function getModelClassName($modelClass)
     {
         $modelClass = trim($modelClass);
-        if (strpos($modelClass, '/')===false) {
+        if (strpos($modelClass, '/') === false) {
             return $modelClass;
         }
         return $this->getGroupedClassName('model', $modelClass);
@@ -232,7 +233,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     {
         $etcDir = $this->getEtcDir();
 
-        $files = glob($etcDir.DS.'*.xml');
+        $files = glob($etcDir . DS . '*.xml');
 
         $this->loadFile(current($files));
         while ($file = next($files)) {
@@ -240,7 +241,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
             $merge->loadFile($file);
             $this->extend($merge);
         }
-        if (in_array($etcDir.DS.'local.xml', $files)) {
+        if (in_array($etcDir . DS . 'local.xml', $files)) {
             $this->_isLocalConfigLoaded = true;
         }
         return $this;
@@ -255,13 +256,13 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     {
         $this->_loadDeclaredModules();
 
-        $this->loadModulesConfiguration(array('config.xml'), $this);
+        $this->loadModulesConfiguration(['config.xml'], $this);
 
         /**
          * Prevent local.xml directives overwriting
          */
         $mergeConfig = clone $this->_prototype;
-        $this->_isLocalConfigLoaded = $mergeConfig->loadFile($this->getEtcDir().DS.'local.xml');
+        $this->_isLocalConfigLoaded = $mergeConfig->loadFile($this->getEtcDir() . DS . 'local.xml');
         if ($this->_isLocalConfigLoaded) {
             $this->extend($mergeConfig);
         }
@@ -297,11 +298,11 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
                     continue;
                 }
                 if (!is_array($fileName)) {
-                    $fileName = array($fileName);
+                    $fileName = [$fileName];
                 }
 
                 foreach ($fileName as $configFile) {
-                    $configFile = $this->getModuleDir('etc', $modName).DS.$configFile;
+                    $configFile = $this->getModuleDir('etc', $modName) . DS . $configFile;
                     if ($mergeModel->loadFile($configFile)) {
                         $this->_makeEventsLowerCase('global', $mergeModel);
                         $this->_makeEventsLowerCase('frontend', $mergeModel);
@@ -325,7 +326,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     public function getModuleConfig($moduleName = '')
     {
         $modules = $this->getNode('modules');
-        if (''===$moduleName) {
+        if ('' === $moduleName) {
             return $modules;
         } else {
             return $modules->$moduleName;
@@ -342,26 +343,26 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     public function getModuleDir($type, $moduleName)
     {
         $codePool = (string)$this->getModuleConfig($moduleName)->codePool;
-        $dir = $this->getCodeDir().DS.$codePool.DS.uc_words($moduleName, DS);
+        $dir = $this->getCodeDir() . DS . $codePool . DS . uc_words($moduleName, DS);
 
         switch ($type) {
             case 'etc':
-                $dir .= DS.'etc';
+                $dir .= DS . 'etc';
                 break;
 
             case 'controllers':
-                $dir .= DS.'controllers';
+                $dir .= DS . 'controllers';
                 break;
 
             case 'sql':
-                $dir .= DS.'sql';
+                $dir .= DS . 'sql';
                 break;
             case 'data':
-                $dir .= DS.'data';
+                $dir .= DS . 'data';
                 break;
 
             case 'locale':
-                $dir .= DS.'locale';
+                $dir .= DS . 'locale';
                 break;
         }
 
@@ -392,20 +393,19 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
             $unsortedConfig->extend($fileConfig);
         }
 
-        $moduleDepends = array();
+        $moduleDepends = [];
         foreach ($unsortedConfig->getNode('modules')->children() as $moduleName => $moduleNode) {
-
-            $depends = array();
+            $depends = [];
             if ($moduleNode->depends) {
                 foreach ($moduleNode->depends->children() as $depend) {
                     $depends[$depend->getName()] = true;
                 }
             }
-            $moduleDepends[$moduleName] = array(
+            $moduleDepends[$moduleName] = [
                 'module'    => $moduleName,
                 'depends'   => $depends,
                 'active'    => (string)$moduleNode->active === 'true',
-            );
+            ];
         }
 
         // check and sort module dependence
@@ -422,7 +422,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
         }
 
         foreach ($moduleDepends as $moduleProp) {
-            $node = $unsortedConfig->getNode('modules/'.$moduleProp['module']);
+            $node = $unsortedConfig->getNode('modules/' . $moduleProp['module']);
             $sortedConfig->getNode('modules')->appendChild($node);
         }
 
@@ -464,7 +464,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
             }
         }
 
-        $definedModules = array();
+        $definedModules = [];
         foreach ($modules as $moduleProp) {
             foreach ($moduleProp['depends'] as $dependModule => $true) {
                 if (!isset($definedModules[$dependModule])) {
@@ -493,11 +493,11 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
             return false;
         }
 
-        $collectModuleFiles = array(
-            'base'   => array(),
-            'mage'   => array(),
-            'custom' => array()
-        );
+        $collectModuleFiles = [
+            'base'   => [],
+            'mage'   => [],
+            'custom' => []
+        ];
 
         foreach ($moduleFiles as $v) {
             $name = explode(DIRECTORY_SEPARATOR, $v);
