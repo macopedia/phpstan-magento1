@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PHPStanMagento1\Type\Mage\CoreModelLayout;
+namespace PHPStanMagento1\Type\Mage\CoreBlockAbstract;
 
 final class Helper extends MethodReturnTypeDetector
 {

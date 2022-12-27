@@ -26,6 +26,10 @@ services:
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
     -
+        class: PHPStanMagento1\Type\Mage\CoreBlockAbstract\Helper
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+    -
         class: PHPStanMagento1\Type\Mage\CoreModelLayout\GetBlockSingleton
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
