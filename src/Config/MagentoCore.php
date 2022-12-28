@@ -280,12 +280,12 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
      * Iterate all active modules "etc" folders and combine data from
      * specified xml file name to one object
      *
-     * @param string $fileName
+     * @param array $fileName
      * @param null|\Mage_Core_Model_Config_Base $mergeToObject
      * @param null $mergeModel
      * @return \Mage_Core_Model_Config_Base
      */
-    public function loadModulesConfiguration($fileName, $mergeToObject = null, $mergeModel = null)
+    public function loadModulesConfiguration(array $fileName, $mergeToObject = null, $mergeModel = null)
     {
         if ($mergeToObject === null) {
             $mergeToObject = clone $this->_prototype;
@@ -300,9 +300,6 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
             if ($module->is('active')) {
                 if ((string)$module->codePool === 'local') {
                     continue;
-                }
-                if (!is_array($fileName)) {
-                    $fileName = [$fileName];
                 }
 
                 foreach ($fileName as $configFile) {
