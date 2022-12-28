@@ -298,6 +298,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
         }
         $modules = $this->getNode('modules')->children();
         foreach ($modules as $modName => $module) {
+            /** @var \Mage_Core_Model_Config_Element $module */
             if ($module->is('active')) {
                 if ($disableLocalModules && ('local' === (string)$module->codePool)) {
                     continue;
