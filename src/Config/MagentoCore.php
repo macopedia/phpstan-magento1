@@ -130,7 +130,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     /**
      * copied from Mage_Core_Model_Config_Element to avoid calling Mage::
      *
-     * @return string
+     * @return string|false
      */
     public function getClassName($config)
     {
