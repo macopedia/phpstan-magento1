@@ -130,9 +130,10 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     /**
      * copied from Mage_Core_Model_Config_Element to avoid calling Mage::
      *
+     * @param \SimpleXMLElement $config
      * @return string|false
      */
-    public function getClassName($config)
+    public function getClassName(\SimpleXMLElement $config)
     {
         if ($config->class) {
             $model = (string)$config->class;
