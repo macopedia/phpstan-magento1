@@ -13,6 +13,11 @@ namespace PHPStanMagento1\Config;
 class MagentoCore extends \Mage_Core_Model_Config_Base
 {
     /**
+     * @var array
+     */
+    protected $_classNameCache;
+
+    /**
      * Empty configuration object for loading and megring configuration parts
      *
      * @var \Mage_Core_Model_Config_Base
