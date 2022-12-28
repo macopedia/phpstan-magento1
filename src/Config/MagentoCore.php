@@ -287,8 +287,6 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
      */
     public function loadModulesConfiguration($fileName, $mergeToObject = null, $mergeModel = null)
     {
-        $disableLocalModules = false;
-
         if ($mergeToObject === null) {
             $mergeToObject = clone $this->_prototype;
             $mergeToObject->loadString('<config/>');
@@ -300,7 +298,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
         foreach ($modules as $modName => $module) {
             /** @var \Mage_Core_Model_Config_Element $module */
             if ($module->is('active')) {
-                if ($disableLocalModules && ('local' === (string)$module->codePool)) {
+                if ((string)$module->codePool === 'local') {
                     continue;
                 }
                 if (!is_array($fileName)) {
