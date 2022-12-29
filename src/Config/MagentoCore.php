@@ -288,6 +288,8 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
      */
     public function loadModulesConfiguration(array $fileName, $mergeToObject = null, $mergeModel = null)
     {
+        $disableLocalModules = $this->_disableLocalModules();
+
         if ($mergeToObject === null) {
             $mergeToObject = clone $this->_prototype;
             $mergeToObject->loadString('<config/>');
@@ -299,7 +301,7 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
         foreach ($modules as $modName => $module) {
             /** @var \Mage_Core_Model_Config_Element $module */
             if ($module->is('active')) {
-                if ((string)$module->codePool === 'local') {
+                if ($disableLocalModules && ((string)$module->codePool === 'local')) {
                     continue;
                 }
 
@@ -558,5 +560,10 @@ class MagentoCore extends \Mage_Core_Model_Config_Base
     protected function _isNodeNameHasUpperCase(\Mage_Core_Model_Config_Element $event)
     {
         return (strtolower($event->getName()) !== (string)$event->getName());
+    }
+
+    protected function _disableLocalModules(): bool
+    {
+        return false;
     }
 }
