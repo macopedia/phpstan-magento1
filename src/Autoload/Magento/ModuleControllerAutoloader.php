@@ -18,7 +18,7 @@ final class ModuleControllerAutoloader
     public function __construct(string $codePool, string $magentoRoot = null)
     {
         if (empty($magentoRoot)) {
-            $magentoRoot = \dirname(BP, 2);
+            $magentoRoot = BP;
         }
         $this->codePool = $codePool;
         $this->magentoRoot = $magentoRoot;
