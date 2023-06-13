@@ -7,7 +7,6 @@ parametersSchema:
     magentoRootPath: string()
 parameters:
     magentoRootPath: %currentWorkingDirectory%/htdocs
-    staticReflection: false
     excludePaths:
         - */app/code/local/*/*/data/*
         - */app/code/local/*/*/sql/*
