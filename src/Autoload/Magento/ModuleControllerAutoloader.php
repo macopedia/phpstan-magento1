@@ -15,7 +15,7 @@ final class ModuleControllerAutoloader
     /** @var string */
     private $codePool;
 
-    public function __construct(string $codePool, string $magentoRoot = null)
+    public function __construct(string $codePool, ?string $magentoRoot = null)
     {
         if (empty($magentoRoot)) {
             $magentoRoot = BP;

@@ -1,10 +1,11 @@
 <?php
+
 declare(strict_types=1);
 
 use PHPStanMagento1\Autoload\Magento\ModuleControllerAutoloader;
 
 /**
- * @var $container \PHPStan\DependencyInjection\MemoizingContainer
+ * @var \PHPStan\DependencyInjection\MemoizingContainer $container
  */
 $magentoRootPath = $container->getParameter('magentoRootPath');
 if (empty($magentoRootPath)) {
@@ -35,7 +36,7 @@ $paths[] = BP . DS . 'lib';
 
 $appPath = implode(PS, $paths);
 set_include_path($appPath . PS . get_include_path());
-include_once "Mage/Core/functions.php";
+include_once 'Mage/Core/functions.php';
 
 (new ModuleControllerAutoloader('local'))->register();
 (new ModuleControllerAutoloader('core'))->register();
@@ -46,8 +47,7 @@ include_once "Mage/Core/functions.php";
  * Autoloading is needed only for the PHPStanMagento1\Config\MagentoCore which inherits from some magento classes.
  * PHPStan uses static analysis, so doesn't require autoloading.
  */
-spl_autoload_register(static function($className) {
-
+spl_autoload_register(static function ($className) {
     $classFile = str_replace(' ', DIRECTORY_SEPARATOR, ucwords(str_replace('_', ' ', $className)));
     $classFile .= '.php';
 
