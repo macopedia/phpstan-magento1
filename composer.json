@@ -3,8 +3,8 @@
     "description": "Extension for PHPStan to allow analysis of Magento 1 code.",
     "type": "library",
     "require": {
-        "phpstan/phpstan": ">=0.12",
-        "php": ">= 7.2"
+        "phpstan/phpstan": "^1.12.11 | ^2.0.2",
+        "php": ">= 7.4"
     },
     "replace": {
         "inviqa/phpstan-magento1": "0.1.5",
