@@ -1,0 +1,8 @@
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon
+parameters:
+    scanFiles:
+        - stubs/mock.stub
+    paths:
+        - src
+    level: 10

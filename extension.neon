@@ -1,26 +1,19 @@
 parametersSchema:
     magentoRootPath: string()
     enforceMagicMethodDocBlock: bool()
+    useLocalXml: bool()
 parameters:
     magentoRootPath: %currentWorkingDirectory%/htdocs
     enforceMagicMethodDocBlock: false
-    excludePaths:
-        - */app/code/local/*/*/data/*
-        - */app/code/local/*/*/sql/*
+    useLocalXml: false
     bootstrapFiles:
-        - phpstan-bootstrap.php
-    scanFiles:
-        - %magentoRootPath%/app/Mage.php
-    typeAliases:
-        Mage_Catalog_Model_Entity_Product_Collection: 'Mage_Catalog_Model_Resource_Product_Collection'
-        callback: 'callable'
-    earlyTerminatingMethodCalls:
-        Mage:
-            - throwException
+        - %currentWorkingDirectory%/app/Mage.php
 
 services:
     mageCoreConfig:
         class: PHPStanMagento1\Config\MageCoreConfig
+        arguments:
+            useLocalXml: %useLocalXml%
 
     ## Dynamic Return Type Extension to return correct class from Mage::getModel() etc
     -

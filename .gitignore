@@ -1,3 +1,11 @@
-/composer.lock
-/vendor/
+# PhpStorm
 .idea
+
+# composer
+/vendor
+
+# PhpStan
+.phpstan*.neon
+phpstan*.neon
+!.phpstan.dist.neon
+!.phpstan.dist.*.neon

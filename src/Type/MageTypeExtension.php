@@ -50,10 +50,10 @@ final class MageTypeExtension implements DynamicMethodReturnTypeExtension, Dynam
         return is_callable($fn);
     }
 
-    public function getTypeFromMethodCall(MethodReflection $methodReflection, CallLike $methodCall, Scope $scope): ?Type
+    public function getTypeFromMethodCall(MethodReflection $methodReflection, CallLike $methodCall, Scope $scope): Type
     {
         if (count($methodCall->getArgs()) === 0) {
-            return null;
+            return new ConstantBooleanType(false);
         }
 
         $fn = $this->mageCoreConfig->getClassNameConverterFunction(
@@ -92,7 +92,7 @@ final class MageTypeExtension implements DynamicMethodReturnTypeExtension, Dynam
         return $this->isMethodSupported($methodReflection);
     }
 
-    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, CallLike $methodCall, Scope $scope): ?Type
+    public function getTypeFromStaticMethodCall(MethodReflection $methodReflection, CallLike $methodCall, Scope $scope): Type
     {
         return $this->getTypeFromMethodCall($methodReflection, $methodCall, $scope);
     }

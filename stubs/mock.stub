@@ -1,0 +1,112 @@
+<?php declare(strict_types=1);
+
+/**
+ * Main Mage hub class
+ */
+final class Mage
+{
+    /**
+     * Get initialized application object.
+     *
+     * @param string $code
+     * @param string $type
+     * @param string|array $options
+     * @return Mage_Core_Model_App
+     */
+    public static function app($code = '', $type = 'store', $options = [])
+    {
+    }
+
+    /**
+     * @static
+     * @param string $code
+     * @param string $type
+     * @param array $options
+     * @param string|array $modules
+     */
+    public static function init($code = '', $type = 'store', $options = [], $modules = [])
+    {
+    }
+}
+
+/**
+ * Application model
+ */
+class Mage_Core_Model_App
+{
+    /**
+     * Retrieve configuration object
+     *
+     * @return Mage_Core_Model_Config
+     */
+    public function getConfig()
+    {
+    }
+}
+
+/**
+ * Core configuration class
+ */
+class Mage_Core_Model_Config
+{
+    /**
+     * Retrieve class name from config.xml node
+     */
+    public function getNodeClassName(string $path): string
+    {
+    }
+
+    /**
+     * Retrieve block class name
+     *
+     * @param string $blockType
+     * @return string
+     */
+    public function getBlockClassName($blockType)
+    {
+    }
+
+    /**
+     * Retrieve helper class name
+     *
+     * @param string $helperAlias
+     * @return string
+     */
+    public function getHelperClassName($helperAlias)
+    {
+    }
+
+    /**
+     * Retrieve model class name
+     *
+     * @param string $modelAlias
+     * @return string
+     */
+    public function getModelClassName($modelAlias)
+    {
+    }
+
+    /**
+     * Retrieve resource model class name
+     *
+     * @param string $modelAlias
+     * @return string|false
+     */
+    public function getResourceModelClassName($modelAlias)
+    {
+    }
+
+    /**
+     * Retrieve resource helper class name
+     */
+    public function getResourceHelperClassName(string $moduleAlias): string|false
+    {
+    }
+}
+
+/**
+ * Varien Object
+ */
+class Varien_Object implements ArrayAccess
+{
+}

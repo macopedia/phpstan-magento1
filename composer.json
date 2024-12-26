@@ -1,19 +1,23 @@
 {
     "name": "macopedia/phpstan-magento1",
     "description": "Extension for PHPStan to allow analysis of Magento 1 code.",
-    "type": "library",
+    "type": "phpstan-extension",
+    "license": "MIT",
     "require": {
-        "phpstan/phpstan": "^1.12.11 | ^2.0.2",
         "php": ">= 7.4"
     },
-    "replace": {
-        "inviqa/phpstan-magento1": "0.1.5",
-        "vianetz/phpstan-magento1": "0.1.5"
+    "require-dev": {
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0"
     },
     "autoload": {
         "psr-4": {
             "PHPStanMagento1\\": "src/"
         }
+    },
+    "replace": {
+        "inviqa/phpstan-magento1": "0.1.5",
+        "vianetz/phpstan-magento1": "0.1.5"
     },
     "scripts": {
         "test-quality": [
@@ -23,5 +27,11 @@
             "@test-quality"
         ]
     },
-    "license": "MIT"
+    "extra": {
+        "phpstan": {
+            "includes": [
+                "extension.neon"
+            ]
+        }
+    }
 }
