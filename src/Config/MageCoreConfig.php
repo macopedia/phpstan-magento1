@@ -41,7 +41,9 @@ final class MageCoreConfig
         case 'Mage::getResourceHelper':
         case 'Mage_Core_Model_Config::getResourceHelper':
         case 'Mage_Core_Model_Config::getResourceHelperInstance':
-            return fn (string $alias) => $this->getConfig()->getResourceHelperClassName($alias);
+            return method_exists($this->getConfig(), 'getResourceHelperClassName')
+                ? fn (string $alias) => $this->getConfig()->getResourceHelperClassName($alias)
+                : null;
         case 'Mage_Core_Model_Layout::createBlock':
         case 'Mage_Core_Model_Layout::getBlockSingleton':
             return fn (string $alias) => $this->getConfig()->getBlockClassName($alias);
