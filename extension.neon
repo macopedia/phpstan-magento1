@@ -22,6 +22,10 @@ services:
         tags:
             - phpstan.broker.methodsClassReflectionExtension
     -
+        class: PHPStanMagento1\Type\Mage\CoreModelLayout\CreateBlock
+        tags:
+            - phpstan.broker.dynamicMethodReturnTypeExtension
+    -
         class: PHPStanMagento1\Type\Mage\CoreModelLayout\Helper
         tags:
             - phpstan.broker.dynamicMethodReturnTypeExtension
